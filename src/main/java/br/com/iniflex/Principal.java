@@ -2,6 +2,7 @@ package br.com.iniflex;
 
 import br.com.iniflex.model.Funcionario;
 import br.com.iniflex.service.FuncionarioService;
+import br.com.iniflex.util.ImpressorFuncionarios;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -15,6 +16,8 @@ public class Principal {
 
         FuncionarioService funcionarioService = new FuncionarioService();
         funcionarioService.remover(funcionarios, "João");
+
+        ImpressorFuncionarios.imprimir(funcionarios);
     }
 
     static List<Funcionario> criarFuncionarios() {
