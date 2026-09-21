@@ -2,6 +2,7 @@ package br.com.iniflex;
 
 import br.com.iniflex.model.Funcionario;
 import br.com.iniflex.service.FuncionarioService;
+import br.com.iniflex.util.FormatadorBrasileiro;
 import br.com.iniflex.util.ImpressorFuncionarios;
 
 import java.math.BigDecimal;
@@ -11,6 +12,8 @@ import java.util.List;
 
 public class Principal {
 
+    private static final BigDecimal PERCENTUAL_AUMENTO = new BigDecimal("10");
+
     public static void main(String[] args) {
         List<Funcionario> funcionarios = criarFuncionarios();
 
@@ -18,6 +21,24 @@ public class Principal {
         funcionarioService.remover(funcionarios, "João");
 
         ImpressorFuncionarios.imprimir(funcionarios);
+
+        funcionarioService.aplicarAumento(funcionarios, PERCENTUAL_AUMENTO);
+        ImpressorFuncionarios.imprimir(funcionarios);
+
+        imprimirTotalSalarios(funcionarios, funcionarioService);
+        imprimirSalariosMinimos(funcionarios, funcionarioService);
+    }
+
+    private static void imprimirTotalSalarios(List<Funcionario> funcionarios, FuncionarioService funcionarioService) {
+        BigDecimal total = funcionarioService.calcularTotalSalarios(funcionarios);
+        System.out.println("Total dos salários: " + FormatadorBrasileiro.formatarValor(total));
+    }
+
+    private static void imprimirSalariosMinimos(List<Funcionario> funcionarios, FuncionarioService funcionarioService) {
+        funcionarios.forEach(funcionario -> {
+            BigDecimal quantidade = funcionarioService.calcularQuantidadeSalariosMinimos(funcionario);
+            System.out.println(funcionario.getNome() + ": " + FormatadorBrasileiro.formatarValor(quantidade) + " salários mínimos");
+        });
     }
 
     static List<Funcionario> criarFuncionarios() {

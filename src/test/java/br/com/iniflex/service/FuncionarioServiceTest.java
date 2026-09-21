@@ -16,6 +16,62 @@ class FuncionarioServiceTest {
     private final FuncionarioService funcionarioService = new FuncionarioService();
 
     @Test
+    @DisplayName("Deve confirmar que o aumento é aplicado a todos os funcionários da lista")
+    void deveAplicarAumentoATodosOsFuncionarios() {
+        List<Funcionario> funcionarios = new ArrayList<>(List.of(
+                new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("1000.00"), "Operador"),
+                new Funcionario("Alice", LocalDate.of(1995, 1, 5), new BigDecimal("2000.00"), "Recepcionista")
+        ));
+
+        funcionarioService.aplicarAumento(funcionarios, new BigDecimal("10"));
+
+        assertThat(funcionarios)
+                .extracting(Funcionario::getSalario)
+                .containsExactly(new BigDecimal("1100.00"), new BigDecimal("2200.00"));
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que o total dos salários soma todos os funcionários da lista")
+    void deveCalcularTotalDosSalarios() {
+        List<Funcionario> funcionarios = List.of(
+                new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("1000.00"), "Operador"),
+                new Funcionario("Alice", LocalDate.of(1995, 1, 5), new BigDecimal("2000.00"), "Recepcionista")
+        );
+
+        BigDecimal total = funcionarioService.calcularTotalSalarios(funcionarios);
+
+        assertThat(total).isEqualByComparingTo("3000.00");
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que o total dos salários é zero quando a lista está vazia")
+    void deveRetornarTotalZeroQuandoListaVazia() {
+        BigDecimal total = funcionarioService.calcularTotalSalarios(List.of());
+
+        assertThat(total).isEqualByComparingTo(BigDecimal.ZERO);
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que a quantidade de salários mínimos é calculada com base no salário do funcionário")
+    void deveCalcularQuantidadeDeSalariosMinimos() {
+        Funcionario funcionario = new Funcionario("Miguel", LocalDate.of(1988, 10, 14), new BigDecimal("2424.00"), "Diretor");
+
+        BigDecimal quantidade = funcionarioService.calcularQuantidadeSalariosMinimos(funcionario);
+
+        assertThat(quantidade).isEqualByComparingTo("2.00");
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que a quantidade de salários mínimos arredonda quando a divisão não é exata")
+    void deveArredondarQuantidadeDeSalariosMinimosQuandoDivisaoNaoEExata() {
+        Funcionario funcionario = new Funcionario("Heitor", LocalDate.of(1999, 11, 19), new BigDecimal("1000.00"), "Operador");
+
+        BigDecimal quantidade = funcionarioService.calcularQuantidadeSalariosMinimos(funcionario);
+
+        assertThat(quantidade).isEqualByComparingTo("0.83");
+    }
+
+    @Test
     @DisplayName("Deve confirmar que o funcionário joão é removido da lista")
     void deveRemoverFuncionarioPorNome() {
         List<Funcionario> funcionarios = new ArrayList<>(List.of(
