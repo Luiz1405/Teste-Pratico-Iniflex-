@@ -9,10 +9,13 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public class Principal {
 
     private static final BigDecimal PERCENTUAL_AUMENTO = new BigDecimal("10");
+    private static final int MES_OUTUBRO = 10;
+    private static final int MES_DEZEMBRO = 12;
 
     public static void main(String[] args) {
         List<Funcionario> funcionarios = criarFuncionarios();
@@ -27,6 +30,19 @@ public class Principal {
 
         imprimirTotalSalarios(funcionarios, funcionarioService);
         imprimirSalariosMinimos(funcionarios, funcionarioService);
+
+        imprimirPorFuncao(funcionarioService.agruparPorFuncao(funcionarios));
+
+        List<Funcionario> aniversariantes = funcionarioService.filtrarPorMesNascimento(funcionarios, MES_OUTUBRO, MES_DEZEMBRO);
+        System.out.println("Aniversariantes de outubro e dezembro:");
+        ImpressorFuncionarios.imprimir(aniversariantes);
+    }
+
+    private static void imprimirPorFuncao(Map<String, List<Funcionario>> funcionariosPorFuncao) {
+        funcionariosPorFuncao.forEach((funcao, funcionariosDaFuncao) -> {
+            System.out.println("Função: " + funcao);
+            ImpressorFuncionarios.imprimir(funcionariosDaFuncao);
+        });
     }
 
     private static void imprimirTotalSalarios(List<Funcionario> funcionarios, FuncionarioService funcionarioService) {

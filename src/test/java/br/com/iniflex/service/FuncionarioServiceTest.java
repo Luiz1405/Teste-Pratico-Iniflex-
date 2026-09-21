@@ -8,6 +8,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -94,5 +95,42 @@ class FuncionarioServiceTest {
         funcionarioService.remover(funcionarios, "Inexistente");
 
         assertThat(funcionarios).hasSize(1);
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que os funcionários são agrupados por função")
+    void deveAgruparFuncionariosPorFuncao() {
+        Funcionario maria = new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("2009.44"), "Operador");
+        Funcionario heitor = new Funcionario("Heitor", LocalDate.of(1999, 11, 19), new BigDecimal("1582.72"), "Operador");
+        Funcionario laura = new Funcionario("Laura", LocalDate.of(1994, 7, 8), new BigDecimal("3017.45"), "Gerente");
+
+        Map<String, List<Funcionario>> agrupado = funcionarioService.agruparPorFuncao(List.of(maria, heitor, laura));
+
+        assertThat(agrupado).containsOnlyKeys("Operador", "Gerente");
+        assertThat(agrupado.get("Operador")).containsExactly(maria, heitor);
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que filtra apenas os funcionários que nascem nos meses informados")
+    void deveFiltrarFuncionariosPorMesDeNascimento() {
+        Funcionario maria = new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("2009.44"), "Operador");
+        Funcionario helena = new Funcionario("Helena", LocalDate.of(1996, 9, 2), new BigDecimal("2799.93"), "Gerente");
+        Funcionario heloisa = new Funcionario("Heloísa", LocalDate.of(2003, 5, 24), new BigDecimal("1606.85"), "Eletricista");
+
+        List<Funcionario> aniversariantes = funcionarioService.filtrarPorMesNascimento(List.of(maria, helena, heloisa), 10, 12);
+
+        assertThat(aniversariantes)
+                .extracting(Funcionario::getNome)
+                .containsExactly("Maria");
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que retorna lista vazia quando ninguém nasce nos meses informados")
+    void deveRetornarListaVaziaQuandoNinguemNasceNosMesesInformados() {
+        Funcionario helena = new Funcionario("Helena", LocalDate.of(1996, 9, 2), new BigDecimal("2799.93"), "Gerente");
+
+        List<Funcionario> aniversariantes = funcionarioService.filtrarPorMesNascimento(List.of(helena), 10, 12);
+
+        assertThat(aniversariantes).isEmpty();
     }
 }

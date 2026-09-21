@@ -4,7 +4,10 @@ import br.com.iniflex.model.Funcionario;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class FuncionarioService {
 
@@ -26,5 +29,16 @@ public class FuncionarioService {
 
     public BigDecimal calcularQuantidadeSalariosMinimos(Funcionario funcionario) {
         return funcionario.getSalario().divide(SALARIO_MINIMO, 2, RoundingMode.HALF_UP);
+    }
+
+    public Map<String, List<Funcionario>> agruparPorFuncao(List<Funcionario> funcionarios) {
+        return funcionarios.stream()
+                .collect(Collectors.groupingBy(Funcionario::getFuncao));
+    }
+
+    public List<Funcionario> filtrarPorMesNascimento(List<Funcionario> funcionarios, int... meses) {
+        return funcionarios.stream()
+                .filter(funcionario -> Arrays.stream(meses).anyMatch(mes -> mes == funcionario.getDataNascimento().getMonthValue()))
+                .collect(Collectors.toList());
     }
 }
