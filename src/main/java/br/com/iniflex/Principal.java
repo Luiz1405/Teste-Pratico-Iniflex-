@@ -34,15 +34,25 @@ public class Principal {
         imprimirPorFuncao(funcionarioService.agruparPorFuncao(funcionarios));
 
         List<Funcionario> aniversariantes = funcionarioService.filtrarPorMesNascimento(funcionarios, MES_OUTUBRO, MES_DEZEMBRO);
-        System.out.println("Aniversariantes de outubro e dezembro:");
-        ImpressorFuncionarios.imprimir(aniversariantes);
+        imprimirComTitulo("Aniversariantes de outubro e dezembro:", aniversariantes);
+
+        funcionarioService.encontrarMaisVelho(funcionarios)
+                .ifPresent(Principal::imprimirFuncionarioMaisVelho);
+
+        imprimirComTitulo("Funcionários em ordem alfabética:", funcionarioService.ordenarPorNome(funcionarios));
+    }
+
+    private static void imprimirFuncionarioMaisVelho(Funcionario funcionario) {
+        System.out.println("Funcionário com maior idade: " + funcionario.getNome() + ", " + funcionario.getIdade() + " anos");
     }
 
     private static void imprimirPorFuncao(Map<String, List<Funcionario>> funcionariosPorFuncao) {
-        funcionariosPorFuncao.forEach((funcao, funcionariosDaFuncao) -> {
-            System.out.println("Função: " + funcao);
-            ImpressorFuncionarios.imprimir(funcionariosDaFuncao);
-        });
+        funcionariosPorFuncao.forEach((funcao, funcionariosDaFuncao) -> imprimirComTitulo("Função: " + funcao, funcionariosDaFuncao));
+    }
+
+    private static void imprimirComTitulo(String titulo, List<Funcionario> funcionarios) {
+        System.out.println(titulo);
+        ImpressorFuncionarios.imprimir(funcionarios);
     }
 
     private static void imprimirTotalSalarios(List<Funcionario> funcionarios, FuncionarioService funcionarioService) {

@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -132,5 +133,38 @@ class FuncionarioServiceTest {
         List<Funcionario> aniversariantes = funcionarioService.filtrarPorMesNascimento(List.of(helena), 10, 12);
 
         assertThat(aniversariantes).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que encontra o funcionário com a data de nascimento mais antiga")
+    void deveEncontrarFuncionarioMaisVelho() {
+        Funcionario maria = new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("2009.44"), "Operador");
+        Funcionario caio = new Funcionario("Caio", LocalDate.of(1961, 5, 2), new BigDecimal("9836.14"), "Coordenador");
+
+        Optional<Funcionario> maisVelho = funcionarioService.encontrarMaisVelho(List.of(maria, caio));
+
+        assertThat(maisVelho).contains(caio);
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que retorna vazio ao buscar o mais velho em uma lista vazia")
+    void deveRetornarVazioAoBuscarMaisVelhoEmListaVazia() {
+        Optional<Funcionario> maisVelho = funcionarioService.encontrarMaisVelho(List.of());
+
+        assertThat(maisVelho).isEmpty();
+    }
+
+    @Test
+    @DisplayName("Deve confirmar que ordena os funcionários em ordem alfabética pelo nome")
+    void deveOrdenarFuncionariosPorNome() {
+        Funcionario maria = new Funcionario("Maria", LocalDate.of(2000, 10, 18), new BigDecimal("2009.44"), "Operador");
+        Funcionario alice = new Funcionario("Alice", LocalDate.of(1995, 1, 5), new BigDecimal("2234.68"), "Recepcionista");
+        Funcionario caio = new Funcionario("Caio", LocalDate.of(1961, 5, 2), new BigDecimal("9836.14"), "Coordenador");
+
+        List<Funcionario> ordenado = funcionarioService.ordenarPorNome(List.of(maria, alice, caio));
+
+        assertThat(ordenado)
+                .extracting(Funcionario::getNome)
+                .containsExactly("Alice", "Caio", "Maria");
     }
 }

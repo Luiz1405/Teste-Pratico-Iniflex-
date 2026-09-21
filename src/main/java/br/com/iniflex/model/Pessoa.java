@@ -1,6 +1,7 @@
 package br.com.iniflex.model;
 
 import java.time.LocalDate;
+import java.time.Period;
 
 public class Pessoa {
 
@@ -10,6 +11,14 @@ public class Pessoa {
     public Pessoa(String nome, LocalDate dataNascimento) {
         this.nome = nome;
         this.dataNascimento = dataNascimento;
+    }
+
+    public int calcularIdade(LocalDate dataReferencia) {
+        return Period.between(dataNascimento, dataReferencia).getYears();
+    }
+
+    public int getIdade() {
+        return calcularIdade(LocalDate.now());
     }
 
     public String getNome() {
