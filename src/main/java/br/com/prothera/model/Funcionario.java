@@ -1,4 +1,4 @@
-package br.com.iniflex.model;
+package br.com.prothera.model;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

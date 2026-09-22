@@ -4,12 +4,12 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>br.com.iniflex</groupId>
+    <groupId>br.com.prothera</groupId>
     <artifactId>teste-pratico-funcionarios</artifactId>
     <version>1.0.0</version>
     <packaging>jar</packaging>
 
-    <name>Teste Pratico Iniflex</name>
+    <name>Teste Pratico Prothera</name>
     <description>Teste pratico de programacao Java: cadastro e regras de negocio sobre funcionarios</description>
 
     <properties>
@@ -25,7 +25,7 @@
         <jacoco-maven-plugin.version>0.8.15</jacoco-maven-plugin.version>
         <exec-maven-plugin.version>3.6.4</exec-maven-plugin.version>
 
-        <main.class>br.com.iniflex.Principal</main.class>
+        <main.class>br.com.prothera.Principal</main.class>
     </properties>
 
     <dependencyManagement>

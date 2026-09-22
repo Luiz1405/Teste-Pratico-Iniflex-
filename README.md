@@ -1,4 +1,4 @@
-# Teste Prático Iniflex
+# Teste Prático Prothera
 
 Projeto Java que cadastra funcionários e aplica as regras de negócio pedidas no teste: remoção, reajuste salarial, agrupamento por função, filtro de aniversariantes, busca do funcionário mais velho, ordenação alfabética e cálculos de totais e salários mínimos.
 
@@ -35,7 +35,7 @@ No momento a cobertura geral do projeto é de 82% de instruções e 100% de bran
 O código fica organizado em três pacotes, separando cada responsabilidade:
 
 ```
-src/main/java/br/com/iniflex/
+src/main/java/br/com/prothera/
   model/       Pessoa e Funcionario, as entidades de domínio
   service/     FuncionarioService, com as regras de negócio
   util/        formatação de data e valor, e a impressão da tabela no console
@@ -43,6 +43,12 @@ src/main/java/br/com/iniflex/
 ```
 
 Os testes ficam em `src/test/java`, espelhando o mesmo pacote das classes que testam.
+
+## Fluxo de trabalho com Git
+
+O desenvolvimento seguiu o Git Flow: a `main` só recebe código pronto, a `dev` integra as funcionalidades, e cada uma delas foi feita em uma branch própria a partir da `dev`, no padrão `feat/nome-da-funcionalidade`.
+
+Os commits seguem o padrão Conventional Commits, no formato `tipo(escopo): descrição`, por exemplo `feat(regras-salariais): aplica reajuste, total e salários mínimos`.
 
 ## Padrões e decisões usadas no código
 

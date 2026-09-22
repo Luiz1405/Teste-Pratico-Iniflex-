@@ -1,6 +1,6 @@
-package br.com.iniflex;
+package br.com.prothera;
 
-import br.com.iniflex.model.Funcionario;
+import br.com.prothera.model.Funcionario;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

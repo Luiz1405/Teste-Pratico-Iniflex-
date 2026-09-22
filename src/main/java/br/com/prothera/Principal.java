@@ -1,9 +1,9 @@
-package br.com.iniflex;
+package br.com.prothera;
 
-import br.com.iniflex.model.Funcionario;
-import br.com.iniflex.service.FuncionarioService;
-import br.com.iniflex.util.FormatadorBrasileiro;
-import br.com.iniflex.util.ImpressorFuncionarios;
+import br.com.prothera.model.Funcionario;
+import br.com.prothera.service.FuncionarioService;
+import br.com.prothera.util.FormatadorBrasileiro;
+import br.com.prothera.util.ImpressorFuncionarios;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;

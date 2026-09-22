@@ -1,4 +1,4 @@
-package br.com.iniflex.util;
+package br.com.prothera.util;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

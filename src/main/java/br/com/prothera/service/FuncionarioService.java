@@ -1,6 +1,6 @@
-package br.com.iniflex.service;
+package br.com.prothera.service;
 
-import br.com.iniflex.model.Funcionario;
+import br.com.prothera.model.Funcionario;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

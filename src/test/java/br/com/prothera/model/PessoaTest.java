@@ -1,4 +1,4 @@
-package br.com.iniflex.model;
+package br.com.prothera.model;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

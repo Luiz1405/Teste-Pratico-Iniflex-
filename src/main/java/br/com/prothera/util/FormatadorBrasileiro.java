@@ -1,4 +1,4 @@
-package br.com.iniflex.util;
+package br.com.prothera.util;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
